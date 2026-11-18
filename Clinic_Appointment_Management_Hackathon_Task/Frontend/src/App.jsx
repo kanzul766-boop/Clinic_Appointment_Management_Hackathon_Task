@@ -113,7 +113,7 @@ export default function App() {
     setLoggingOut(true);
     let logoutFailed = false;
     try {
-      await api("/auth/logout", { method: "POST", body: jsonBody({}) });
+      await api("/api/auth/logout", { method: "POST", body: jsonBody({}) });
     } catch {
       logoutFailed = true;
     }

@@ -20,13 +20,13 @@ The React/Vite frontend lives in `Frontend`, beside the Express backend in `Back
    npm run dev
    ```
 
-3. Open the URL printed by Vite. Its development proxy forwards the existing backend routes to `http://localhost:9000` by default.
+3. Open the URL printed by Vite. Its development proxy forwards backend routes to `http://localhost:9000` by default.
 
-Copy `Frontend/.env.example` to `Frontend/.env` and set `VITE_BACKEND_URL` if the backend uses another URL. Vite reads this value when it starts. Do not put private backend API keys in frontend environment variables.
+Copy `Frontend/.env.example` to `Frontend/.env` and set `VITE_BACKEND_URL` to the backend origin if the backend uses another URL. Vite uses it for the development proxy, and the frontend uses it as the API origin in deployed builds. Set it before building the frontend; do not put private backend API keys in frontend environment variables. If the deployed frontend and backend use different origins, set the backend's `FRONTEND_URL` to the frontend origin (or a comma-separated list of allowed origins) for credentialed API requests.
 
 ## API integration
 
-The backend exposes the required `/api` endpoints and retains the original prefixless paths used by the frontend:
+The backend exposes `/api` endpoints alongside the original prefixless routes:
 
 | Method | Endpoint | Access |
 |---|---|---|

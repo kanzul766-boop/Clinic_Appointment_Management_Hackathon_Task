@@ -1,4 +1,5 @@
 import express  from "express";
+import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
 import doctorRegistrationRoutes from "./routes/doctor-registration.routes.js";
 import postRoutes from "./routes/post.routes.js";
@@ -9,6 +10,14 @@ import notificationRoutes from "./routes/notification.routes.js";
 import profileRoutes from "./routes/profile.routes.js";
 import cookieParser from "cookie-parser";
 const app = express();
+const frontendOrigins = (process.env.FRONTEND_URL || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+app.use(cors({
+  origin: frontendOrigins.length ? frontendOrigins : false,
+  credentials: true,
+}));
 app.use(express.json());
 app.use(cookieParser());
 

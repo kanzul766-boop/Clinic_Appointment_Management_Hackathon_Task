@@ -34,10 +34,10 @@ export default function AuthScreen({ onAuthenticated, theme, onToggleTheme }) {
     try {
       const isDoctorRegistration = mode === "register" && registrationRole === "doctor";
       const path = mode === "login"
-        ? "/auth/login"
+        ? "/api/auth/login"
         : isDoctorRegistration
           ? "/doctor/register"
-          : "/auth/register";
+          : "/api/auth/register";
       const body = mode === "login"
         ? { email: form.email, password: form.password }
         : isDoctorRegistration
