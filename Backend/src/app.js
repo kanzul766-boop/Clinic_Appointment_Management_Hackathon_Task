@@ -15,16 +15,18 @@ const frontendOrigins = (process.env.FRONTEND_URL || "")
   .split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
-  app.get("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "Clinic Appointment Management API is running"
-  });
-});
+
 app.use(cors({
   origin: frontendOrigins.length ? frontendOrigins : false,
   credentials: true,
 }));
+
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "Clinic Appointment Management API is running",
+  });
+});
 app.use(express.json());
 app.use(cookieParser());
 

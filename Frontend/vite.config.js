@@ -3,7 +3,29 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
-  const backend = env.VITE_BACKEND_URL || process.env.VITE_BACKEND_URL || "http://localhost:9000";
+  const configuredBackend = env.VITE_BACKEND_URL || process.env.VITE_BACKEND_URL;
+  const backend = configuredBackend || "http://localhost:9000";
+  if (mode === "production") {
+    if (!configuredBackend) {
+      throw new Error("VITE_BACKEND_URL must be set to the deployed backend origin for production builds.");
+    }
+
+    let backendUrl;
+    try {
+      backendUrl = new URL(configuredBackend);
+    } catch {
+      throw new Error("VITE_BACKEND_URL must be a valid HTTPS backend origin.");
+    }
+    if (
+      backendUrl.protocol !== "https:" ||
+      backendUrl.pathname !== "/" ||
+      backendUrl.search ||
+      backendUrl.hash
+    ) {
+      throw new Error("VITE_BACKEND_URL must be an HTTPS origin without a path, query, or fragment.");
+    }
+  }
+
   return {
   plugins: [react()],
   server: {
