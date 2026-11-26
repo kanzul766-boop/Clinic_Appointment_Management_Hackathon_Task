@@ -93,6 +93,8 @@ a { color: inherit; text-decoration: none; }
 .button-white { color: #655ba0; background: #fff; box-shadow: 0 6px 16px #30315220; }
 .button-small { padding: 9px 12px; border-radius: 9px; font-size: 10px; }
 .auth-submit { width: 100%; min-height: 48px; margin-top: 3px; }
+.auth-demo-buttons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+.auth-demo-buttons button { width: 100%; }
 .auth-assurance { display: flex; justify-content: center; align-items: center; gap: 7px; margin-top: 23px; color: #999bab; font-size: 10px; }
 .auth-assurance svg { color: #897ed1; }
 .auth-footer { display: flex; justify-content: space-between; gap: 15px; color: #a0a2b1; font-size: 10px; }

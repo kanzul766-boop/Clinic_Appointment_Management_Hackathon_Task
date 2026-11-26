@@ -11,6 +11,12 @@ import {
 import { api, jsonBody, setToken } from "../api.js";
 import ThemeToggle from "./ThemeToggle.jsx";
 
+const DEMO_ACCOUNTS = [
+  { role: "Admin", email: "demo.admin@clinic.local", password: "DevAdmin!2026" },
+  { role: "Patient", email: "demo.jamie@clinic.local", password: "DevPatient!2026" },
+  { role: "Doctor", email: "demo.avery@clinic.local", password: "DevDoctor!2026" },
+];
+
 export default function AuthScreen({ onAuthenticated, theme, onToggleTheme }) {
   const [mode, setMode] = useState("login");
   const [registrationRole, setRegistrationRole] = useState("patient");
@@ -153,6 +159,24 @@ export default function AuthScreen({ onAuthenticated, theme, onToggleTheme }) {
               {busy ? <span className="spinner" /> : <>{mode === "login" ? "Sign in to Clair" : registrationRole === "doctor" ? "Submit doctor application" : "Create my account"} <ArrowRight size={17} /></>}
             </button>
           </form>
+          {mode === "login" && (
+            <div className="auth-demo-buttons" role="group" aria-label="Demo login options">
+              {DEMO_ACCOUNTS.map(({ role, email, password }) => (
+                <button
+                  key={role}
+                  type="button"
+                  className="button button-soft button-small"
+                  onClick={() => {
+                    setForm((current) => ({ ...current, email, password }));
+                    setError("");
+                  }}
+                  disabled={busy}
+                >
+                  {role}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="auth-assurance"><ShieldCheck size={16} /><span>Your health information stays private and protected.</span></div>
         </div>
         <footer className="auth-footer"><span>© 2026 Clair Health</span><span>Care that feels like care.</span></footer>
