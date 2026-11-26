@@ -9,6 +9,7 @@ import adminRoutes from "./routes/admin.routes.js";
 import notificationRoutes from "./routes/notification.routes.js";
 import profileRoutes from "./routes/profile.routes.js";
 import cookieParser from "cookie-parser";
+import connectDB from "./db/db.js";
 const app = express();
 const frontendOrigins = (process.env.FRONTEND_URL || "")
   .split(",")
@@ -26,6 +27,32 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(
+  [
+    "/auth",
+    "/api/auth",
+    "/doctor",
+    "/post",
+    "/doctors",
+    "/api/doctors",
+    "/appointments",
+    "/api/appointments",
+    "/admin",
+    "/api/admin",
+    "/notifications",
+    "/api/profile",
+  ],
+  async (req, res, next) => {
+    try {
+      await connectDB();
+      next();
+    } catch (error) {
+      console.error("Database connection failed:", error);
+      res.status(503).json({ message: "Database unavailable" });
+    }
+  },
+);
 
 app.use("/auth", authRoutes);
 app.use("/api/auth", authRoutes);
