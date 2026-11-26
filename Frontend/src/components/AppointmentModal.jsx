@@ -55,11 +55,7 @@ export default function AppointmentModal({ doctor, onClose, onBooked, notify }) 
     setError("");
     try {
       const result = await api(`/doctors/${doctor.id}/availability`);
-      if (!result.availability) {
-        setError("This doctor hasn’t added availability yet.");
-      } else {
-        setAvailability(result.availability);
-      }
+      setAvailability(result.availability);
     } catch (requestError) {
       setError(requestError.message);
     } finally {
